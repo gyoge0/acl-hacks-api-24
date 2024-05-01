@@ -2,14 +2,14 @@ from collections import OrderedDict
 
 from flask import Flask, request
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 next_id = 1
 messages = OrderedDict()
 class_list = OrderedDict()
 
 
-@app.route("/messages", methods=["GET", "POST", "DELETE"])
+@application.route("/messages", methods=["GET", "POST", "DELETE"])
 def messages():
     global next_id
 
@@ -40,12 +40,12 @@ tickers = {
 }
 
 
-@app.route("/stocks", methods=["GET"])
+@application.route("/stocks", methods=["GET"])
 def stocks_no_ticker():
     return list(tickers.keys()), 200
 
 
-@app.route("/stocks/<ticker>", methods=["GET"])
+@application.route("/stocks/<ticker>", methods=["GET"])
 def stocks(ticker):
     if ticker.upper() in tickers.keys():
         return str(tickers[ticker.upper()]), 200
@@ -54,4 +54,4 @@ def stocks(ticker):
 
 
 if __name__ == "__main__":
-    app.run()
+    application.run(port=80)
