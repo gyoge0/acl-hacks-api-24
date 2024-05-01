@@ -11,7 +11,7 @@ class_list = OrderedDict()
 
 @app.route("/messages", methods=["GET", "POST", "DELETE"])
 def messages():
-    global messages, next_id
+    global next_id
 
     match request.method:
         case "GET":
@@ -31,6 +31,7 @@ def messages():
             return "Message ID not found", 404
 
 
+# noinspection SpellCheckingInspection
 tickers = {
     "AMZN": 175.00,
     "AAPL": 170.33,
