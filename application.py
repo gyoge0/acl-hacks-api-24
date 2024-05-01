@@ -53,5 +53,10 @@ def stocks(ticker):
         return 404
 
 
+@application.route("/")
+def index():
+    return "Welcome to my API!", 200
+
+
 if __name__ == "__main__":
     application.run(port=80)
