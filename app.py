@@ -6,6 +6,7 @@ app = Flask(__name__)
 
 next_id = 1
 messages = OrderedDict()
+class_list = OrderedDict()
 
 
 @app.route("/messages", methods=["GET", "POST", "DELETE"])
@@ -28,6 +29,27 @@ def messages():
             messages.pop(request.data), 204
         case "DELETE":
             return "Message ID not found", 404
+
+
+tickers = {
+    "AMZN": 175.00,
+    "AAPL": 170.33,
+    "NVDA": 864.02,
+    "WMT": 59.35,
+}
+
+
+@app.route("/stocks", methods=["GET"])
+def stocks_no_ticker():
+    return list(tickers.keys()), 200
+
+
+@app.route("/stocks/<ticker>", methods=["GET"])
+def stocks(ticker):
+    if ticker.upper() in tickers.keys():
+        return str(tickers[ticker.upper()]), 200
+    else:
+        return 404
 
 
 if __name__ == "__main__":
