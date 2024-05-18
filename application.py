@@ -5,7 +5,7 @@ from flask import Flask, request
 application = Flask(__name__)
 
 next_id = 1
-messages = OrderedDict()
+messages_dict = OrderedDict()
 class_list = OrderedDict()
 
 
@@ -15,18 +15,18 @@ def messages():
 
     match request.method:
         case "GET":
-            return messages, 200
+            return messages_dict, 200
         case "POST" if len(request.data) > 50:
             # 413 Request Entity Too Large
             return "Message can only be up to 50 characters", 413
         case "POST":
-            messages[next_id] = request.data.decode("utf-8")
-            if len(messages) > 50:
-                messages.popitem(last=False)
+            messages_dict[next_id] = request.data.decode("utf-8")
+            if len(messages_dict) > 50:
+                messages_dict.popitem(last=False)
             next_id += 1
             return str(next_id - 1), 201
-        case "DELETE" if request.data in messages.keys():
-            messages.pop(request.data), 204
+        case "DELETE" if request.data in messages_dict.keys():
+            messages_dict.pop(request.data), 204
         case "DELETE":
             return "Message ID not found", 404
 
